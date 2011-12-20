@@ -1,4 +1,8 @@
-%bcond_without	tests
+#
+# Conditional build:
+%bcond_without	tests		# don't perform "make check"
+%bcond_without	default_libpng	# don't use this libpng as default system libpng
+#
 Summary:	PNG library
 Summary(de.UTF-8):	PNG-Library
 Summary(es.UTF-8):	Biblioteca PNG
@@ -7,16 +11,17 @@ Summary(pl.UTF-8):	Biblioteka PNG
 Summary(pt_BR.UTF-8):	Biblioteca PNG
 Summary(tr.UTF-8):	PNG kitaplığı
 Name:		libpng
-Version:	1.4.8
+Version:	1.5.7
 Release:	1
 Epoch:		2
 License:	distributable
 Group:		Libraries
 Source0:	http://downloads.sourceforge.net/libpng/%{name}-%{version}.tar.xz
-# Source0-md5:	2ce595d571f2b06a9403ed5bcfa4ecbd
+# Source0-md5:	c3ae9ce4e81ec0aafdd4ac961586ee0d
 Patch0:		%{name}-pngminus.patch
-# http://littlesvr.ca/apng/diff/%{name}-%{version}-apng.patch | dos2unix
-Patch1:		%{name}-apng.patch
+Patch1:		http://downloads.sourceforge.net/libpng-apng/%{name}-%{version}-apng.patch.gz
+# Patch1-md5:	6c6a674048cec94db1bc35decf0d142c
+Patch2:		%{name}-apng-fix.patch
 URL:		http://www.libpng.org/pub/png/libpng.html
 BuildRequires:	rpmbuild(macros) >= 1.213
 BuildRequires:	tar >= 1:1.22
@@ -140,7 +145,8 @@ Narzędzia do konwersji plików PNG z lub do plików PNM.
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p0
+%patch1 -p1
+%patch2 -p1
 
 %build
 %configure
@@ -163,6 +169,14 @@ install -d $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
 install contrib/pngminus/{png2pnm,pnm2png} $RPM_BUILD_ROOT%{_bindir}
 install example.c $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
 
+%if %{without default_libpng}
+%{__rm} $RPM_BUILD_ROOT%{_bindir}/{libpng-config,pn?2pn?} \
+	$RPM_BUILD_ROOT%{_libdir}/libpng.{so,la,a} \
+	$RPM_BUILD_ROOT%{_includedir}/png*.h \
+	$RPM_BUILD_ROOT%{_pkgconfigdir}/libpng.pc \
+	$RPM_BUILD_ROOT%{_mandir}/man[35]/*png*
+%endif
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -172,33 +186,39 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc ANNOUNCE CHANGES LICENSE README TODO
-%attr(755,root,root) %{_libdir}/libpng14.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libpng14.so.14
+%attr(755,root,root) %{_libdir}/libpng15.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libpng15.so.15
 
 %files devel
 %defattr(644,root,root,755)
-%doc libpng-%{version}.txt
-%attr(755,root,root) %{_bindir}/libpng14-config
+%doc libpng-manual.txt
+%attr(755,root,root) %{_bindir}/libpng15-config
+%attr(755,root,root) %{_libdir}/libpng15.so
+%{_libdir}/libpng15.la
+%{_includedir}/libpng15
+%{_pkgconfigdir}/libpng15.pc
+%{_examplesdir}/%{name}-%{version}
+%if %{with default_libpng}
 %attr(755,root,root) %{_bindir}/libpng-config
-%attr(755,root,root) %{_libdir}/libpng14.so
 %attr(755,root,root) %{_libdir}/libpng.so
-%{_libdir}/libpng14.la
 %{_libdir}/libpng.la
-%{_pkgconfigdir}/libpng14.pc
 %{_pkgconfigdir}/libpng.pc
-%{_includedir}/libpng14
 %{_includedir}/png*.h
 %{_mandir}/man3/libpng.3*
 %{_mandir}/man3/libpngpf.3*
 %{_mandir}/man5/png.5*
-%{_examplesdir}/%{name}-%{version}
+%endif
 
 %files static
 %defattr(644,root,root,755)
-%{_libdir}/libpng14.a
+%{_libdir}/libpng15.a
+%if %{with default_libpng}
 %{_libdir}/libpng.a
+%endif
 
+%if %{with default_libpng}
 %files progs
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/png2pnm
 %attr(755,root,root) %{_bindir}/pnm2png
+%endif
