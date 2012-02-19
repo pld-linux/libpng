@@ -11,16 +11,16 @@ Summary(pl.UTF-8):	Biblioteka PNG
 Summary(pt_BR.UTF-8):	Biblioteca PNG
 Summary(tr.UTF-8):	PNG kitaplığı
 Name:		libpng
-Version:	1.5.8
+Version:	1.5.9
 Release:	1
 Epoch:		2
 License:	distributable
 Group:		Libraries
 Source0:	http://downloads.sourceforge.net/libpng/%{name}-%{version}.tar.xz
-# Source0-md5:	0f7ae352beadaff78073733905613041
+# Source0-md5:	05d9ab3705c34954c0032b71318b678a
 Patch0:		%{name}-pngminus.patch
 Patch1:		http://downloads.sourceforge.net/libpng-apng/%{name}-%{version}-apng.patch.gz
-# Patch1-md5:	158772fecdc6d8591bcd382c04da334c
+# Patch1-md5:	268f7db97b292d5f14a24ea7940f6f1c
 Patch2:		%{name}-apng-fix.patch
 URL:		http://www.libpng.org/pub/png/libpng.html
 BuildRequires:	rpmbuild(macros) >= 1.213
