@@ -167,15 +167,15 @@ ln -sf scripts/makefile.linux ./Makefile
 	LIBPATH=%{_libdir} \
 	CC="%{__cc}" \
 %ifarch %{x8664} sparc sparcv9 sparc64
-	OPT_FLAGS="%{rpmcflags} -DPNG_NO_MMX_CODE"
+	OPT_FLAGS="%{rpmcppflags} %{rpmcflags} -DPNG_NO_MMX_CODE"
 %else
-	OPT_FLAGS="%{rpmcflags}"
+	OPT_FLAGS="%{rpmcppflags} %{rpmcflags}"
 %endif
 
 %{__make} -C contrib/pngminus -f makefile.std \
 	LIBPATH=%{_libdir} \
 	CC="%{__cc}" \
-	OPT_FLAGS="%{rpmcflags}"
+	OPT_FLAGS="%{rpmcppflags} %{rpmcflags}"
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -188,8 +188,8 @@ install -d $RPM_BUILD_ROOT{%{_bindir},%{_libdir},%{_mandir}/man{3,5}} \
 	LIBPATH=%{_libdir} \
 	MANPATH=%{_mandir}
 
-install contrib/pngminus/{png2pnm,pnm2png} $RPM_BUILD_ROOT%{_bindir}
-install example.c $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
+install -p contrib/pngminus/{png2pnm,pnm2png} $RPM_BUILD_ROOT%{_bindir}
+cp -p example.c $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -218,7 +218,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/libpng12
 %{_includedir}/libpng
 %{_includedir}/png*.h
-%{_mandir}/man?/*
+%{_mandir}/man3/libpng.3*
+%{_mandir}/man3/libpngpf.3*
+%{_mandir}/man5/png.5*
 %{_examplesdir}/%{name}-%{version}
 
 %files static
@@ -228,4 +230,5 @@ rm -rf $RPM_BUILD_ROOT
 
 %files progs
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/p*
+%attr(755,root,root) %{_bindir}/png2pnm
+%attr(755,root,root) %{_bindir}/pnm2png
