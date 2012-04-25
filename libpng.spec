@@ -7,28 +7,30 @@ Summary(pl.UTF-8):	Biblioteka PNG
 Summary(pt_BR.UTF-8):	Biblioteca PNG
 Summary(tr.UTF-8):	PNG kitaplığı
 Name:		libpng
-Version:	1.2.18
+Version:	1.2.49
 Release:	1
 Epoch:		2
 License:	distributable
 Group:		Libraries
-Source0:	http://dl.sourceforge.net/libpng/%{name}-%{version}.tar.bz2
-# Source0-md5:	25a7f2f101eaaf2eb18c4987e0fbe39d
+Source0:	http://downloads.sourceforge.net/libpng/%{name}-%{version}.tar.xz
+# Source0-md5:	2e7966a54826a4735f3f52bd8c763c79
 Patch0:		%{name}-pngminus.patch
 Patch1:		%{name}-opt.patch
 Patch2:		%{name}-norpath.patch
-Patch3:		%{name}-libdirfix.patch
-Patch4:		%{name}-gcc-pch.patch
-Patch5:		%{name}-export_old.patch
-Patch6:		%{name}-revert.patch
+Patch3:		%{name}-export_old.patch
+Patch4:		%{name}-revert.patch
+# http://littlesvr.ca/apng/
+Patch5:		%{name}-apng.patch
 URL:		http://www.libpng.org/pub/png/libpng.html
 BuildRequires:	rpmbuild(macros) >= 1.213
+BuildRequires:	xz >= 1:4.999.7
 BuildRequires:	zlib-devel
 %ifarch %{x8664} ia64 ppc64 s390x sparc64
 Provides:	libpng.so.3()(64bit)
 %else
 Provides:	libpng.so.3
 %endif
+Provides:	libpng(APNG) = 0.10
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -78,6 +80,7 @@ Summary(tr.UTF-8):	başlık dosyaları ve statik kitaplıklar
 Group:		Development/Libraries
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 Requires:	zlib-devel
+Provides:	libpng(APNG)-devel = 0.10
 Conflicts:	libpng < 1.0.15
 
 %description devel
@@ -109,21 +112,22 @@ PNG kitaplığını kullanan programlar geliştirmek için gereken
 kitaplıklar ve başlık dosyaları.
 
 %package static
-Summary:	Static PNG libraries
-Summary(de.UTF-8):	Statischen PNG Libraries
-Summary(pl.UTF-8):	Biblioteki statyczne PNG
+Summary:	Static PNG library
+Summary(de.UTF-8):	Statisch PNG Library
+Summary(pl.UTF-8):	Biblioteka statyczna PNG
 Summary(pt_BR.UTF-8):	Bibliotecas estáticas para desenvolvimento com libpng
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{epoch}:%{version}-%{release}
+Provides:	libpng(APNG)-static = 0.10
 
 %description static
-Static PNG libraries.
+Static PNG library.
 
 %description static -l de.UTF-8
-Statischen PNG Libraries.
+Statisch PNG Library.
 
 %description static -l pl.UTF-8
-Biblioteki statyczne PNG.
+Biblioteka statyczna PNG.
 
 %description static -l pt_BR.UTF-8
 Bibliotecas estáticas para desenvolvimento com libpng.
@@ -132,6 +136,7 @@ Bibliotecas estáticas para desenvolvimento com libpng.
 Summary:	libpng utility programs
 Summary(pl.UTF-8):	Narzędzia do plików PNG
 Group:		Applications/Graphics
+Requires:	%{name} = %{epoch}:%{version}-%{release}
 
 %description progs
 This package contains utility programs to convert PNG files to and
@@ -141,14 +146,14 @@ from PNM files.
 Narzędzia do konwersji plików PNG z lub do plików PNM.
 
 %prep
-%setup -q
+%setup -q -c -T
+xzcat -dc %{SOURCE0} | tar xf - -C ..
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
-%patch5 -p1
-%patch6 -p1
+%patch5 -p0
 
 %ifarch %{ix86}
 ln -sf scripts/makefile.gcmmx ./Makefile
@@ -161,16 +166,16 @@ ln -sf scripts/makefile.linux ./Makefile
 	prefix=%{_prefix} \
 	LIBPATH=%{_libdir} \
 	CC="%{__cc}" \
-%ifarch %{x8664}
-	OPT_FLAGS="%{rpmcflags} -DPNG_NO_MMX_CODE"
+%ifarch %{x8664} sparc sparcv9 sparc64
+	OPT_FLAGS="%{rpmcppflags} %{rpmcflags} -DPNG_NO_MMX_CODE"
 %else
-	OPT_FLAGS="%{rpmcflags}"
+	OPT_FLAGS="%{rpmcppflags} %{rpmcflags}"
 %endif
 
 %{__make} -C contrib/pngminus -f makefile.std \
 	LIBPATH=%{_libdir} \
 	CC="%{__cc}" \
-	OPT_FLAGS="%{rpmcflags}"
+	OPT_FLAGS="%{rpmcppflags} %{rpmcflags}"
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -183,8 +188,8 @@ install -d $RPM_BUILD_ROOT{%{_bindir},%{_libdir},%{_mandir}/man{3,5}} \
 	LIBPATH=%{_libdir} \
 	MANPATH=%{_mandir}
 
-install contrib/pngminus/{png2pnm,pnm2png} $RPM_BUILD_ROOT%{_bindir}
-install example.c $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
+install -p contrib/pngminus/{png2pnm,pnm2png} $RPM_BUILD_ROOT%{_bindir}
+cp -p example.c $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -213,7 +218,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/libpng12
 %{_includedir}/libpng
 %{_includedir}/png*.h
-%{_mandir}/man?/*
+%{_mandir}/man3/libpng.3*
+%{_mandir}/man3/libpngpf.3*
+%{_mandir}/man5/png.5*
 %{_examplesdir}/%{name}-%{version}
 
 %files static
@@ -223,4 +230,5 @@ rm -rf $RPM_BUILD_ROOT
 
 %files progs
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/p*
+%attr(755,root,root) %{_bindir}/png2pnm
+%attr(755,root,root) %{_bindir}/pnm2png
