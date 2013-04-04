@@ -1,3 +1,7 @@
+# TODO (when we decide we're ready for 1.5.x -> 1.6.x switch):
+# - copy libpng.git tree to libpng15.git
+# - on libpng15.git master switch default_libpng to off
+# - merge libpng.git libpng-1.6 branch to master
 #
 # Conditional build:
 %bcond_without	tests		# don't perform "make check"
@@ -11,16 +15,16 @@ Summary(pl.UTF-8):	Biblioteka PNG
 Summary(pt_BR.UTF-8):	Biblioteca PNG
 Summary(tr.UTF-8):	PNG kitaplığı
 Name:		libpng
-Version:	1.5.15
+Version:	1.6.1
 Release:	1
 Epoch:		2
 License:	distributable
 Group:		Libraries
 Source0:	http://downloads.sourceforge.net/libpng/%{name}-%{version}.tar.xz
-# Source0-md5:	e3122e7b5b5c36c034a4624c65f8a9d8
+# Source0-md5:	93fc0b0841ce2db0e6756673e22dafc3
 Patch0:		%{name}-pngminus.patch
-Patch1:		http://downloads.sourceforge.net/libpng-apng/%{name}-1.5.15-apng.patch.gz
-# Patch1-md5:	3ae9ea7e4bd201f0b25e25cd6049b094
+Patch1:		http://downloads.sourceforge.net/libpng-apng/%{name}-1.6.1-apng.patch.gz
+# Patch1-md5:	39c34060c2f0e48f3849dcdbd4a16b7a
 URL:		http://www.libpng.org/pub/png/libpng.html
 BuildRequires:	rpmbuild(macros) >= 1.213
 BuildRequires:	tar >= 1:1.22
@@ -184,17 +188,17 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc ANNOUNCE CHANGES LICENSE README TODO
-%attr(755,root,root) %{_libdir}/libpng15.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libpng15.so.15
+%attr(755,root,root) %{_libdir}/libpng16.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libpng16.so.16
 
 %files devel
 %defattr(644,root,root,755)
 %doc libpng-manual.txt
-%attr(755,root,root) %{_bindir}/libpng15-config
-%attr(755,root,root) %{_libdir}/libpng15.so
-%{_libdir}/libpng15.la
-%{_includedir}/libpng15
-%{_pkgconfigdir}/libpng15.pc
+%attr(755,root,root) %{_bindir}/libpng16-config
+%attr(755,root,root) %{_libdir}/libpng16.so
+%{_libdir}/libpng16.la
+%{_includedir}/libpng16
+%{_pkgconfigdir}/libpng16.pc
 %{_examplesdir}/%{name}-%{version}
 %if %{with default_libpng}
 %attr(755,root,root) %{_bindir}/libpng-config
@@ -209,7 +213,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files static
 %defattr(644,root,root,755)
-%{_libdir}/libpng15.a
+%{_libdir}/libpng16.a
 %if %{with default_libpng}
 %{_libdir}/libpng.a
 %endif
