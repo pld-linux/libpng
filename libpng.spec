@@ -1,8 +1,3 @@
-# TODO (when we decide we're ready for 1.5.x -> 1.6.x switch):
-# - copy libpng.git tree to libpng15.git
-# - on libpng15.git master switch default_libpng to off
-# - merge libpng.git libpng-1.6 branch to master
-#
 # Conditional build:
 %bcond_without	tests		# don't perform "make check"
 %bcond_without	default_libpng	# don't use this libpng as default system libpng
