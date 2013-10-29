@@ -15,16 +15,16 @@ Summary(pl.UTF-8):	Biblioteka PNG
 Summary(pt_BR.UTF-8):	Biblioteca PNG
 Summary(tr.UTF-8):	PNG kitaplığı
 Name:		libpng
-Version:	1.6.1
+Version:	1.6.6
 Release:	1
 Epoch:		2
 License:	distributable
 Group:		Libraries
 Source0:	http://downloads.sourceforge.net/libpng/%{name}-%{version}.tar.xz
-# Source0-md5:	93fc0b0841ce2db0e6756673e22dafc3
+# Source0-md5:	3a41dcd58bcac7cc191c2ec80c7fb2ac
 Patch0:		%{name}-pngminus.patch
-Patch1:		http://downloads.sourceforge.net/libpng-apng/%{name}-1.6.1-apng.patch.gz
-# Patch1-md5:	39c34060c2f0e48f3849dcdbd4a16b7a
+Patch1:		http://downloads.sourceforge.net/libpng-apng/%{name}-1.6.5-apng.patch.gz
+# Patch1-md5:	e05f0ba9534e0331bf499d63811cbf93
 URL:		http://www.libpng.org/pub/png/libpng.html
 BuildRequires:	rpmbuild(macros) >= 1.213
 BuildRequires:	tar >= 1:1.22
@@ -222,5 +222,7 @@ rm -rf $RPM_BUILD_ROOT
 %files progs
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/png2pnm
+%attr(755,root,root) %{_bindir}/pngfix
+%attr(755,root,root) %{_bindir}/png-fix-itxt
 %attr(755,root,root) %{_bindir}/pnm2png
 %endif
