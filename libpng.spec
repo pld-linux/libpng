@@ -10,16 +10,17 @@ Summary(pl.UTF-8):	Biblioteka PNG
 Summary(pt_BR.UTF-8):	Biblioteca PNG
 Summary(tr.UTF-8):	PNG kitaplığı
 Name:		libpng
-Version:	1.6.18
+Version:	1.6.20
 Release:	1
 Epoch:		2
 License:	distributable
 Group:		Libraries
 Source0:	http://downloads.sourceforge.net/libpng/%{name}-%{version}.tar.xz
-# Source0-md5:	6a57c8e0f5469b9c9949a4b43d57b3a1
+# Source0-md5:	3968acb7c66ef81a9dab867f35d0eb4b
 Patch0:		%{name}-pngminus.patch
-Patch1:		http://downloads.sourceforge.net/libpng-apng/%{name}-1.6.18-apng.patch.gz
-# Patch1-md5:	a9c85fe3cf0347ea94356f1e70d07973
+Patch1:		http://downloads.sourceforge.net/libpng-apng/%{name}-%{version}-apng.patch.gz
+# Patch1-md5:	b2186d5e7853890e25b34b03c7f2ddde
+Patch2:		%{name}-sh.patch
 URL:		http://www.libpng.org/pub/png/libpng.html
 BuildRequires:	rpmbuild(macros) >= 1.213
 BuildRequires:	tar >= 1:1.22
@@ -144,6 +145,7 @@ Narzędzia do konwersji plików PNG z lub do plików PNM.
 %setup -q
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 %build
 %configure
