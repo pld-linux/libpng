@@ -1,3 +1,4 @@
+#
 # Conditional build:
 %bcond_without	tests		# don't perform "make check"
 %bcond_without	default_libpng	# don't use this libpng as default system libpng
@@ -10,17 +11,16 @@ Summary(pl.UTF-8):	Biblioteka PNG
 Summary(pt_BR.UTF-8):	Biblioteca PNG
 Summary(tr.UTF-8):	PNG kitaplığı
 Name:		libpng
-Version:	1.6.20
+Version:	1.6.21
 Release:	1
 Epoch:		2
 License:	distributable
 Group:		Libraries
 Source0:	http://downloads.sourceforge.net/libpng/%{name}-%{version}.tar.xz
-# Source0-md5:	3968acb7c66ef81a9dab867f35d0eb4b
+# Source0-md5:	3bacb4728f6694a64ad9052769d6a4ce
 Patch0:		%{name}-pngminus.patch
 Patch1:		http://downloads.sourceforge.net/libpng-apng/%{name}-%{version}-apng.patch.gz
-# Patch1-md5:	b2186d5e7853890e25b34b03c7f2ddde
-Patch2:		%{name}-sh.patch
+# Patch1-md5:	360346394543ec0a880f61830541608f
 URL:		http://www.libpng.org/pub/png/libpng.html
 BuildRequires:	rpmbuild(macros) >= 1.213
 BuildRequires:	tar >= 1:1.22
@@ -145,7 +145,6 @@ Narzędzia do konwersji plików PNG z lub do plików PNM.
 %setup -q
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
 
 %build
 %configure
