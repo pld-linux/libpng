@@ -1,3 +1,4 @@
+# TODO: switch to zlib >= 1.2.8.1 when released (for inflateValidate())
 #
 # Conditional build:
 %bcond_without	tests		# don't perform "make check"
@@ -11,16 +12,16 @@ Summary(pl.UTF-8):	Biblioteka PNG
 Summary(pt_BR.UTF-8):	Biblioteca PNG
 Summary(tr.UTF-8):	PNG kitaplığı
 Name:		libpng
-Version:	1.6.25
+Version:	1.6.26
 Release:	1
 Epoch:		2
 License:	distributable
 Group:		Libraries
 Source0:	http://downloads.sourceforge.net/libpng/%{name}-%{version}.tar.xz
-# Source0-md5:	0cb72ef57a576bfed1b6cb4b5a09b554
+# Source0-md5:	faed9bb495d2e12dd0c9ec561ca60cd8
 Patch0:		%{name}-pngminus.patch
 Patch1:		http://downloads.sourceforge.net/libpng-apng/%{name}-%{version}-apng.patch.gz
-# Patch1-md5:	0e38f51075a7d77f646e44dcdb0c0a3a
+# Patch1-md5:	921d2717418bf74b40b94191c8b282c7
 URL:		http://www.libpng.org/pub/png/libpng.html
 BuildRequires:	rpmbuild(macros) >= 1.213
 BuildRequires:	tar >= 1:1.22
