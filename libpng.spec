@@ -1,3 +1,5 @@
+# NOTE: there is intel SSE optimization available but with no runtime detection;
+#       it's enabled based on compiler flags (-msse*, either explicit or implied by -march=)
 #
 # Conditional build:
 %bcond_without	tests		# don't perform "make check"
@@ -11,16 +13,16 @@ Summary(pl.UTF-8):	Biblioteka PNG
 Summary(pt_BR.UTF-8):	Biblioteca PNG
 Summary(tr.UTF-8):	PNG kitaplığı
 Name:		libpng
-Version:	1.6.28
+Version:	1.6.29
 Release:	1
 Epoch:		2
 License:	distributable
 Group:		Libraries
 Source0:	http://downloads.sourceforge.net/libpng/%{name}-%{version}.tar.xz
-# Source0-md5:	425354f86c392318d31aedca71019372
+# Source0-md5:	3245dbd76ea91e1437507357b858ec97
 Patch0:		%{name}-pngminus.patch
 Patch1:		http://downloads.sourceforge.net/libpng-apng/%{name}-%{version}-apng.patch.gz
-# Patch1-md5:	fca7c6d87c8352e645facefc2e1dd153
+# Patch1-md5:	75ebf0972827a0079e8d0bd03fcbe6f7
 URL:		http://www.libpng.org/pub/png/libpng.html
 BuildRequires:	rpmbuild(macros) >= 1.213
 BuildRequires:	tar >= 1:1.22
@@ -147,7 +149,17 @@ Narzędzia do konwersji plików PNG z lub do plików PNM.
 %patch1 -p1
 
 %build
-%configure
+%configure \
+%ifarch %{arm} aarch64
+	--enable-arm-neon=check \
+%endif
+%ifarch mipsel mips64el
+	--enable-mips-msa=check \
+%endif
+%ifarch ppc ppc64
+	--enable-powerpc-vsx=check
+%endif
+
 %{__make}
 
 %{__make} -C contrib/pngminus -f makefile.std \
