@@ -38,3 +38,35 @@
  
  png2pnm$(O): png2pnm$(C)
  	$(CC) -c $(CFLAGS) png2pnm$(C)
+--- libpng-1.6.32/contrib/pngminus/pnm2png.c~	2017-08-24 21:44:51.000000000 +0200
++++ libpng-1.6.32/contrib/pngminus/pnm2png.c	2017-10-22 11:21:14.284686698 +0200
+@@ -376,7 +376,7 @@ BOOL pnm2png (FILE *pnm_file, FILE *png_
+   /* row_bytes is the width x number of channels x (bit-depth / 8) */
+     row_bytes = width * channels * ((bit_depth <= 8) ? 1 : 2);
+ 
+-  if ((row_bytes == 0 || (size_t)height > ((size_t)(-1))/(size_t)row_bytes)
++  if ((row_bytes == 0 || (size_t)height > ((size_t)(-1))/(size_t)row_bytes))
+   {
+     /* too big */ 
+     return FALSE;
+--- libpng-1.6.32/contrib/pngminus/png2pnm.c~	2017-08-24 21:44:51.000000000 +0200
++++ libpng-1.6.32/contrib/pngminus/png2pnm.c	2017-10-22 11:25:16.018590786 +0200
+@@ -443,7 +443,7 @@ BOOL png2pnm (FILE *png_file, FILE *pnm_
+   if (png_pixels != (unsigned char*) NULL)
+     free (png_pixels);
+ 
+-  PNG_UNUSED(raw) /* to quiet a Coverity defect */
++  
+   return TRUE;
+ 
+ } /* end of source */
+--- libpng-1.6.32/contrib/pngminus/pnm2png.c~	2017-10-22 11:26:20.000000000 +0200
++++ libpng-1.6.32/contrib/pngminus/pnm2png.c	2017-10-22 11:26:43.537683599 +0200
+@@ -513,7 +513,6 @@ BOOL pnm2png (FILE *pnm_file, FILE *png_
+   if (png_pixels != (unsigned char*) NULL)
+     free (png_pixels);
+ 
+-  PNG_UNUSED(raw) /* Quiet a Coverity defect */
+ 
+   return TRUE;
+ } /* end of pnm2png */
