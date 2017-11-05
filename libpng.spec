@@ -27,7 +27,7 @@ URL:		http://www.libpng.org/pub/png/libpng.html
 BuildRequires:	rpmbuild(macros) >= 1.213
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	xz >= 1:4.999.7
-BuildRequires:	zlib-devel
+BuildRequires:	zlib-devel >= 1.2.9
 Provides:	libpng(APNG) = 0.10
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
