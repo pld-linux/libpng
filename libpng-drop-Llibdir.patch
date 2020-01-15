@@ -1,0 +1,11 @@
+--- libpng-1.6.37/libpng-config.in.orig	2019-04-14 20:10:32.000000000 +0200
++++ libpng-1.6.37/libpng-config.in	2020-01-15 19:59:39.773607141 +0100
+@@ -19,7 +19,7 @@
+ libs="-lpng@PNGLIB_MAJOR@@PNGLIB_MINOR@"
+ all_libs="-lpng@PNGLIB_MAJOR@@PNGLIB_MINOR@ @LIBS@"
+ I_opts="-I${includedir}"
+-L_opts="-L${libdir}"
++L_opts=""
+ R_opts=""
+ cppflags=""
+ ccopts=""
