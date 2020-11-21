@@ -152,7 +152,7 @@ Narzędzia do konwersji plików PNG z lub do plików PNM.
 
 %build
 %configure \
-%ifarch %{arm} aarch64
+%ifarch armv7l armv7hl armv7hnl armv8l armv8hl armv8hnl armv8hcnl aarch64
 	--enable-arm-neon=check \
 %endif
 %ifarch mipsel mips64el
