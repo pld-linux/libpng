@@ -5,7 +5,7 @@
 %bcond_without	tests		# don't perform "make check"
 %bcond_without	default_libpng	# don't use this libpng as default system libpng
 #
-%define		apng_version	1.6.37
+%define		apng_version	%{version}
 
 Summary:	PNG library
 Summary(de.UTF-8):	PNG-Library
@@ -23,7 +23,7 @@ Group:		Libraries
 Source0:	https://downloads.sourceforge.net/libpng/%{name}-%{version}.tar.xz
 # Source0-md5:	122e6b7837811698563083b352bc8ca2
 Patch0:		http://downloads.sourceforge.net/libpng-apng/%{name}-%{apng_version}-apng.patch.gz
-# Patch0-md5:	f02073fd96816b184c79b297775e37dc
+# Patch0-md5:	831a5f302970a91a8168647366c2e0af
 Patch1:		%{name}-pngminus.patch
 Patch2:		%{name}-drop-Llibdir.patch
 URL:		http://www.libpng.org/pub/png/libpng.html
