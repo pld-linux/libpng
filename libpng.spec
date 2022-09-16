@@ -22,7 +22,7 @@ License:	distributable
 Group:		Libraries
 Source0:	https://downloads.sourceforge.net/libpng/%{name}-%{version}.tar.xz
 # Source0-md5:	122e6b7837811698563083b352bc8ca2
-Patch0:		http://downloads.sourceforge.net/libpng-apng/%{name}-%{apng_version}-apng.patch.gz
+Patch0:		https://downloads.sourceforge.net/libpng-apng/%{name}-%{apng_version}-apng.patch.gz
 # Patch0-md5:	831a5f302970a91a8168647366c2e0af
 Patch1:		%{name}-pngminus.patch
 Patch2:		%{name}-drop-Llibdir.patch
