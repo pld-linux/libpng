@@ -20,7 +20,7 @@ Release:	1
 Epoch:		2
 License:	distributable
 Group:		Libraries
-Source0:	http://downloads.sourceforge.net/libpng/%{name}-%{version}.tar.xz
+Source0:	https://downloads.sourceforge.net/libpng/%{name}-%{version}.tar.xz
 # Source0-md5:	122e6b7837811698563083b352bc8ca2
 Patch0:		http://downloads.sourceforge.net/libpng-apng/%{name}-%{apng_version}-apng.patch.gz
 # Patch0-md5:	f02073fd96816b184c79b297775e37dc
