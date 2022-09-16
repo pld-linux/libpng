@@ -5,6 +5,8 @@
 %bcond_without	tests		# don't perform "make check"
 %bcond_without	default_libpng	# don't use this libpng as default system libpng
 #
+%define		apng_version	1.6.37
+
 Summary:	PNG library
 Summary(de.UTF-8):	PNG-Library
 Summary(es.UTF-8):	Biblioteca PNG
@@ -13,19 +15,19 @@ Summary(pl.UTF-8):	Biblioteka PNG
 Summary(pt_BR.UTF-8):	Biblioteca PNG
 Summary(tr.UTF-8):	PNG kitaplığı
 Name:		libpng
-Version:	1.6.37
-Release:	2
+Version:	1.6.38
+Release:	1
 Epoch:		2
 License:	distributable
 Group:		Libraries
 Source0:	http://downloads.sourceforge.net/libpng/%{name}-%{version}.tar.xz
-# Source0-md5:	015e8e15db1eecde5f2eb9eb5b6e59e9
-Patch0:		http://downloads.sourceforge.net/libpng-apng/%{name}-%{version}-apng.patch.gz
+# Source0-md5:	122e6b7837811698563083b352bc8ca2
+Patch0:		http://downloads.sourceforge.net/libpng-apng/%{name}-%{apng_version}-apng.patch.gz
 # Patch0-md5:	f02073fd96816b184c79b297775e37dc
 Patch1:		%{name}-pngminus.patch
 Patch2:		%{name}-drop-Llibdir.patch
 URL:		http://www.libpng.org/pub/png/libpng.html
-BuildRequires:	rpmbuild(macros) >= 1.213
+BuildRequires:	rpmbuild(macros) >= 2.007
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	xz >= 1:4.999.7
 BuildRequires:	zlib-devel >= 1.2.9
@@ -152,8 +154,12 @@ Narzędzia do konwersji plików PNG z lub do plików PNM.
 
 %build
 %configure \
-%ifarch armv7l armv7hl armv7hnl armv8l armv8hl armv8hnl armv8hcnl aarch64
+%ifarch %{arm} aarch64
+%ifarch %{arm_with_neon}
+	--enable-arm-neon=yes \
+%else
 	--enable-arm-neon=check \
+%endif
 %endif
 %ifarch mipsel mips64el
 	--enable-mips-msa=check \
