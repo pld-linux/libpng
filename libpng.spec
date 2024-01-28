@@ -4,6 +4,7 @@
 # Conditional build:
 %bcond_without	tests		# don't perform "make check"
 %bcond_without	default_libpng	# don't use this libpng as default system libpng
+%bcond_without	static_libs	# static library
 #
 %define		apng_version	1.6.40
 
@@ -154,6 +155,7 @@ Narzędzia do konwersji plików PNG z lub do plików PNM.
 
 %build
 %configure \
+	%{__enable_disable static_libs static} \
 %ifarch %{arm} aarch64
 %ifarch %{arm_with_neon}
 	--enable-arm-neon=yes \
@@ -189,7 +191,8 @@ install example.c $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
 
 %if %{without default_libpng}
 %{__rm} $RPM_BUILD_ROOT%{_bindir}/{libpng-config,pn?2pn?} \
-	$RPM_BUILD_ROOT%{_libdir}/libpng.{so,la,a} \
+	$RPM_BUILD_ROOT%{_libdir}/libpng.{so,la} \
+	%{?with_static_libs:$RPM_BUILD_ROOT%{_libdir}/libpng.a} \
 	$RPM_BUILD_ROOT%{_includedir}/png*.h \
 	$RPM_BUILD_ROOT%{_pkgconfigdir}/libpng.pc \
 	$RPM_BUILD_ROOT%{_mandir}/man[35]/*png*
@@ -227,11 +230,13 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man5/png.5*
 %endif
 
+%if %{with static_libs}
 %files static
 %defattr(644,root,root,755)
 %{_libdir}/libpng16.a
 %if %{with default_libpng}
 %{_libdir}/libpng.a
+%endif
 %endif
 
 %if %{with default_libpng}
