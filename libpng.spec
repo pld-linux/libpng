@@ -157,10 +157,10 @@ Narzędzia do konwersji plików PNG z lub do plików PNM.
 %configure \
 	%{__enable_disable static_libs static} \
 %ifarch %{arm} aarch64
-%ifarch %{arm_with_neon}
+%ifarch %{arm_with_neon} aarch64
 	--enable-arm-neon=yes \
 %else
-	--enable-arm-neon=check \
+	--enable-arm-neon=no \
 %endif
 %endif
 %ifarch mipsel mips64el
