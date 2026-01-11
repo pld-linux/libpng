@@ -80,8 +80,8 @@ Summary(pl.UTF-8):	Pliki nagłówkowe libpng
 Summary(pt_BR.UTF-8):	Arquivos de inclusão e bibliotecas estáticas
 Summary(tr.UTF-8):	başlık dosyaları ve statik kitaplıklar
 Group:		Development/Libraries
-Requires:	%{name} = %{epoch}:%{version}-%{release}
-Requires:	zlib-devel
+Requires:	%{name}%{?_isa} = %{epoch}:%{version}-%{release}
+Requires:	zlib-devel%{?_isa}
 Provides:	libpng(APNG)-devel = 0.10
 Conflicts:	libpng < 1.0.15
 
@@ -119,7 +119,7 @@ Summary(de.UTF-8):	Statisch PNG Library
 Summary(pl.UTF-8):	Biblioteka statyczna PNG
 Summary(pt_BR.UTF-8):	Bibliotecas estáticas para desenvolvimento com libpng
 Group:		Development/Libraries
-Requires:	%{name}-devel = %{epoch}:%{version}-%{release}
+Requires:	%{name}-devel%{?_isa} = %{epoch}:%{version}-%{release}
 Provides:	libpng(APNG)-static = 0.10
 
 %description static
