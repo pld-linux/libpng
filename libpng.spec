@@ -6,7 +6,7 @@
 %bcond_without	default_libpng	# don't use this libpng as default system libpng
 %bcond_without	static_libs	# static library
 #
-%define		apng_version	%{version}
+%define		apng_version	1.6.54
 
 Summary:	PNG library
 Summary(de.UTF-8):	PNG-Library
@@ -16,13 +16,13 @@ Summary(pl.UTF-8):	Biblioteka PNG
 Summary(pt_BR.UTF-8):	Biblioteca PNG
 Summary(tr.UTF-8):	PNG kitaplığı
 Name:		libpng
-Version:	1.6.54
+Version:	1.6.55
 Release:	1
 Epoch:		2
 License:	distributable
 Group:		Libraries
 Source0:	https://downloads.sourceforge.net/libpng/%{name}-%{version}.tar.xz
-# Source0-md5:	ba9e86853c794d111398b66a42bfa0dc
+# Source0-md5:	bc950b5a06ec1028285e14a127f6fb6e
 Patch0:		https://downloads.sourceforge.net/libpng-apng/%{name}-%{apng_version}-apng.patch.gz
 # Patch0-md5:	073fb9cc80b7bad022bdfef53ddea540
 Patch1:		%{name}-pngminus.patch
